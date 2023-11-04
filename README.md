@@ -1,6 +1,12 @@
-# Getting Started with Create React App
+# All Karting
+Blablabla
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How was it built?
+    ► Still in progress
+
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)
+<br>![img](https://img.shields.io/badge/version-1.0-orange)
 
 ## Available Scripts
 
