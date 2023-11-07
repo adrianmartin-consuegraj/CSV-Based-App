@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Antoniou",
+        "points": 120
+    },
+    {
+        "name": "Yepa",
+        "points": 120
+    },
+    {
+        "name": "Saee",
+        "points": 120
+    }
+]
