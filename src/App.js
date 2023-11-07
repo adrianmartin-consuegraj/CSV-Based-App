@@ -1,22 +1,26 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Drivers from './components/Driver';
+import DriverForm from './components/DriverForm';
 import './App.css';
 
 function App() {
+
+  const [drivers, setDrivers] = useState([]);
+
+  const addDriver = (newDriver) => {
+    setDrivers([...drivers, newDriver]);
+  };
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Drivers />
+        <Drivers drivers={drivers} />
+        <DriverForm onAddDriver={addDriver} />
       </header>
     </div>
   );
