@@ -3,6 +3,7 @@ package com.standings.allKarting.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvException;
 import com.opencsv.exceptions.CsvValidationException;
 import com.standings.allKarting.models.Driver;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,17 @@ import java.util.stream.Collectors;
 @Service
 public class DriverService {
 
+    //* the good ones
+    String kartingStandings = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/kartingStandings.csv";
+    String currentRace = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/currentRace.csv";
+    String positionPoints = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/positionPoints.csv";
+
+
+/*
     String fileName = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/fileCreated.txt";
     String filePath = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/json.txt";
     String driversJSON = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/drivers.txt";
     String csvFilePath = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/export.csv";
-
-    // the good ones
-    String kartingStandings = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/kartingStandings.csv";
-    String currentRace = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/currentRace.csv";
-    String positionPoints = "C:/Users/Adrian/Desktop/All-Karting-Project/allKarting/files/positionPoints.csv";
 
     //! don't use
     public void createFile() {
@@ -102,10 +105,10 @@ public class DriverService {
             e.printStackTrace(); // Example: Print the stack trace
         }
     }
+ */
 
 
-
-    //? (1) working heavenly
+    //* update "kartingStandings.csv" file
     public String updateStandings() {
 
         String[] nextRecord;
@@ -232,7 +235,7 @@ public class DriverService {
         }
     }
 
-    //? PERFECT!
+    //* retrieve all the drivers
     public List<Driver> getAllDrivers(){
 
         String[] nextRecord;
@@ -269,7 +272,7 @@ public class DriverService {
         return drivers;
     }
 
-    //? PERFECT!
+    //* adding a Driver
     public void createDriver(Driver d){
 
         String[] csvHeader = { "Position", "Name", "Points" };
@@ -320,4 +323,36 @@ public class DriverService {
 
     }
 
+    public void deleteDriver(String name) {
+        try {
+            // Read the existing data from the CSV file
+            CSVReader csvReader = new CSVReader(new FileReader(kartingStandings));
+            List<String[]> rows = csvReader.readAll();
+            csvReader.close();
+
+            // Find the index of the driver with the given name
+            int indexToRemove = -1;
+            for (int i = 0; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                if (row.length > 1 && row[1].equals(name)) {
+                    indexToRemove = i;
+                    break;
+                }
+            }
+
+            // If the driver was found, remove the entry
+            if (indexToRemove >= 0) {
+                rows.remove(indexToRemove);
+
+                // Write the updated data back to the CSV file
+                FileWriter fileWriter = new FileWriter(kartingStandings);
+                CSVWriter csvWriter = new CSVWriter(fileWriter);
+                csvWriter.writeAll(rows);
+                csvWriter.close();
+            }
+        } catch (IOException | CsvException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

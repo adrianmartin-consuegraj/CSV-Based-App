@@ -15,6 +15,7 @@ public class DriverController {
     @Autowired
     private DriverService driverService;
 
+/*
     //! don't use
     @GetMapping("/bb")
     public String getAllDrivers(){
@@ -50,9 +51,9 @@ public class DriverController {
     public void createCSV(){
         driverService.convertJsonToCsv();
     }
+*/
 
-
-    //? (1) working heavenly
+    //* (1) update the "kartingStandings.csv" file
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/updateStandings")
     @ResponseBody
@@ -60,18 +61,26 @@ public class DriverController {
         return driverService.updateStandings();
     }
 
-    //? (2) working heavenly
+    //* (2) get all the Drivers inside the "kartingStandings.csv" file
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/drivers")
-    List<Driver> allDrivers(){
+    public List<Driver> allDrivers(){
         return driverService.getAllDrivers();
     }
 
-    //? (3) working heavenly
+    //* (3) add a Driver ("name" and "points") to the "kartingStandings.csv" file
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/drivers/add")
-    String addDriver(@RequestBody Driver d){
+    public String addDriver(@RequestBody Driver d){
         driverService.createDriver(d);
+        return "done!";
+    }
+
+    //? (4) delete a Driver (by "name") from the "kartingStandings.csv" file
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/drivers/delete/{name}")
+    public String deleteDriver(@RequestBody @PathVariable String name){
+        driverService.deleteDriver(name);
         return "done!";
     }
 
